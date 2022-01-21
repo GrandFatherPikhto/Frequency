@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.grandfatherpikhto.frequency.MainActivity">
+    <item
+        android:id="@+id/action_pulse"
+        android:title="@string/action_pulse" />
+    <item
+        android:id="@+id/action_modulation"
+        android:title="@string/action_modulation" />
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
+</menu>

@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Frequency</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="modulation_fragment_label">Modulation</string>
+    <string name="pulse_fragment_label">Pulsation</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="tvModulationFrequency">Modulation Frequency %1$03.1f Hz</string>
+    <string name="frequency_modulation_slider">Modulation Frequency</string>
+    <string name="sound_on_off">On/Off</string>
+    <string name="tvPulseFrequency">Pulse Frequency %1$02d Hz</string>
+    <string name="frequency_pulse_slider">Frequency Pulse</string>
+    <string name="tvFrequency">Frequency %1$02.1f Hz</string>
+    <string name="slider_frequency">Frequency</string>
+    <string name="tvEnvelope">Envelope %1$0.02f</string>
+    <string name="slider_envelope">Envelope</string>
+    <string name="action_modulation">Modulation</string>
+    <string name="action_pulse">Pulse</string>
+</resources>

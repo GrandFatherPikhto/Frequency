@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Генератор Частот</string>
+    <string name="action_settings">Настройки</string>
+    <string name="modulation_fragment_label">Модуляция полупериода</string>
+    <string name="pulse_fragment_label">Пульсации</string>
+    <string name="next">Следующий</string>
+    <string name="previous">Предыдущий</string>
+    <string name="hello_first_fragment">Привет, первый фрагмент</string>
+    <string name="hello_second_fragment">Привет, второй фрагмент</string>
+    <string name="tvModulationFrequency">Частота несущей %1$03.1f Гц</string>
+    <string name="frequency_modulation_slider">Частота несущей</string>
+    <string name="sound_on_off">Включить/Выключить</string>
+    <string name="tvPulseFrequency">Частота Пульсаций %1$02d Гц</string>
+    <string name="frequency_pulse_slider">Частота Пульсаций</string>
+    <string name="tvFrequency">Частота %1$02.1f Гц</string>
+    <string name="slider_frequency">Частота</string>
+    <string name="tvEnvelope">Огибающая %10.02f</string>
+    <string name="slider_envelope">Огибающая</string>
+    <string name="action_modulation">Модуляция</string>
+    <string name="action_pulse">Пульсация</string>
+</resources>

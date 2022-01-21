@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/ModulationFragment">
+
+    <fragment
+        android:id="@+id/ModulationFragment"
+        android:name="com.grandfatherpikhto.frequency.ModulationFragment"
+        android:label="@string/modulation_fragment_label"
+        tools:layout="@layout/fragment_modulation">
+
+        <action
+            android:id="@+id/action_ModulationFragment_to_PulseFragment"
+            app:destination="@id/PulseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/PulseFragment"
+        android:name="com.grandfatherpikhto.frequency.PulseFragment"
+        android:label="@string/pulse_fragment_label"
+        tools:layout="@layout/fragment_pulse">
+
+        <action
+            android:id="@+id/action_PulseFragment_to_ModulationFragment"
+            app:destination="@id/ModulationFragment" />
+    </fragment>
+</navigation>
