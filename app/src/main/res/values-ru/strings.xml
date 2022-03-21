@@ -19,4 +19,6 @@
     <string name="slider_envelope">Огибающая</string>
     <string name="action_modulation">Модуляция</string>
     <string name="action_pulse">Пульсация</string>
+    <string name="action_play">Воспроизвести/Остановить</string>
+    <string name="description_play">Воспроизвести/Остановить воспроизведение звука</string>
 </resources>

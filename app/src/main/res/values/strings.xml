@@ -20,4 +20,6 @@
     <string name="slider_envelope">Envelope</string>
     <string name="action_modulation">Modulation</string>
     <string name="action_pulse">Pulse</string>
+    <string name="action_play">Play/Stop sound</string>
+    <string name="description_play">Play/Stop sound</string>
 </resources>
