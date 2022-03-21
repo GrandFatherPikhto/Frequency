@@ -19,8 +19,8 @@ class PlayService: Service() {
             ToneModulationPlayer()
         }
 
-        var frequency:Int = 20
-            get() = frequency
+        var frequency:Int = 0
+            get() = modulationPlayer.frequency
             set(value: Int) {
                 field = value
                 modulationPlayer.frequency = value
