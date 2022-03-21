@@ -51,11 +51,22 @@ class ToneModulationPlayer {
             Pair(37, 74),
             Pair(38, 76),
             Pair(39, 78),
-            Pair(40, 80)
+            Pair(40, 80),
+            Pair(41, 82),
+            Pair(42, 84),
+            Pair(43, 86),
+            Pair(44, 88),
+            Pair(45, 90),
+            Pair(46, 92),
+            Pair(47, 94),
+            Pair(48, 96),
+            Pair(49, 98),
+            Pair(50, 100)
         )
     }
 
     var frequency:Int = 10
+        get() = field
         set(value: Int) {
             field = value
             Log.e(TAG, "frequency = $field")
@@ -131,7 +142,7 @@ class ToneModulationPlayer {
                         .build()
                     audioTrack?.setVolume(10.0f)
                     while (isPlay) {
-                        // Log.e(TAG, "generateSound $step $audioTrack")
+                        // Log.e(TAG, "generateSound $step $frequency")
                         generateTone(step++)
                         audioTrack?.write(generatedSound, 0, generatedSound.size)
                         audioTrack?.play()
