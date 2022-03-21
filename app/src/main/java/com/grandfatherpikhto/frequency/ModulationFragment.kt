@@ -6,8 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.grandfatherpikhto.frequency.databinding.FragmentModulationBinding
+import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
 /**
@@ -25,11 +28,7 @@ class ModulationFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
-    private val modulationModel by viewModels<ModulationModel>()
-
-    private val modulationPlayer by lazy {
-        ToneModulationPlayer()
-    }
+    private val modulationModel by activityViewModels<ModulationModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,30 +41,36 @@ class ModulationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        Log.e(TAG, "model: $modulationModel")
         binding.apply {
+            ibPlay.setOnClickListener { button ->
+                Log.e(TAG, "onClick($button)")
+                modulationModel.resetPlay()
+            }
+
             sliderPulseFrequency.addOnChangeListener { _, value, fromUser ->
                 if(fromUser) {
                     modulationModel.changeFrequency(value.roundToInt())
                 }
             }
-            switchModulation.setOnCheckedChangeListener { _, isChecked ->
-                modulationModel.changeEnable(isChecked)
+        }
+
+        lifecycleScope.launch {
+            modulationModel.enable.collect { enable ->
+                Log.e(TAG, "Enable: $enable")
+                if (enable) {
+                    binding.ibPlay.setImageResource(R.drawable.ic_baseline_pause_48)
+                } else {
+                    binding.ibPlay.setImageResource(R.drawable.ic_baseline_play_arrow_48)
+                }
             }
         }
 
-        modulationModel.enable.observe(viewLifecycleOwner, { enable ->
-            if(enable) {
-                modulationPlayer.play()
-            } else {
-                modulationPlayer.stop()
+        lifecycleScope.launch {
+            modulationModel.frequency.collect { frequency ->
+                binding.tvPulseFrequency.text = getString(R.string.tvPulseFrequency, frequency)
             }
-        })
-
-        modulationModel.frequency.observe(viewLifecycleOwner, { frequency ->
-            binding.tvPulseFrequency.text = getString(R.string.tvPulseFrequency, frequency)
-            modulationPlayer.frequency = frequency
-        })
+        }
     }
 
     override fun onDestroyView() {
@@ -75,16 +80,9 @@ class ModulationFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        modulationModel.frequency.value?.let { frequency ->
-            binding.tvPulseFrequency.text = getString(R.string.tvPulseFrequency, frequency)
-        }
-        modulationModel.enable.value?.let { enable ->
-            binding.switchModulation.isChecked = enable
-        }
     }
 
     override fun onPause() {
         super.onPause()
-        modulationPlayer.stop()
     }
 }
