@@ -6,18 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ModulationFragment">
 
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/switchModulation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minHeight="48dp"
-        android:text="@string/sound_on_off"
-        app:layout_constraintBottom_toTopOf="@+id/tvPulseFrequency"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/tvPulseFrequency"
         android:layout_width="wrap_content"
@@ -27,7 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switchModulation" />
+        app:layout_constraintTop_toBottomOf="@+id/ibPlay" />
 
     <com.google.android.material.slider.Slider
         android:id="@+id/sliderPulseFrequency"
@@ -37,11 +25,23 @@
         android:stepSize="1.0"
         android:value="20"
         android:valueFrom="2.0"
-        android:valueTo="40.0"
+        android:valueTo="50"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvPulseFrequency" />
+
+    <ImageButton
+        android:id="@+id/ibPlay"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:contentDescription="@string/description_play"
+        android:src="@drawable/ic_baseline_play_arrow_48"
+        app:layout_constraintBottom_toTopOf="@+id/tvPulseFrequency"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
