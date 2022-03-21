@@ -73,9 +73,22 @@ class ToneModulationPlayer {
             generateTone()
         }
 
+    var enable:Boolean = false
+        get() = field
+        set(value: Boolean) {
+            if(field != value) {
+                field = value
+                if (value) {
+                    play()
+                } else {
+                    close()
+                }
+            }
+        }
+
     private var sample = Array(sampleRate) { _ -> 0.0 }
     private var generatedSound:ByteArray = ByteArray(sampleRate * duration * 2)
-    private var isPlay = true
+    private var isPlay = false
     private var playThread:Thread? = null
     private var audioTrack:AudioTrack? = null
     private val enveloped = true
@@ -116,11 +129,11 @@ class ToneModulationPlayer {
     }
 
 
-    fun play() {
-        isPlay = true
+    private fun play() {
         // Log.e(TAG, "play($isPlay, $playThread)")
-        if(playThread == null) {
+        if(!isPlay && playThread == null) {
             playThread = Thread {
+                isPlay = true
                 var step = 0
                 try {
                     audioTrack = AudioTrack.Builder()
@@ -148,7 +161,7 @@ class ToneModulationPlayer {
                         audioTrack?.play()
                     }
 
-                    stop()
+                    close()
                 } catch (e: Exception) {
                     Log.e(ModulationFragment.TAG, "Error: $e")
                 }
@@ -157,24 +170,7 @@ class ToneModulationPlayer {
         }
     }
 
-    fun close() {
-        playThread?.interrupt()
-        playThread?.join()
-        audioTrack?.stop()
-        audioTrack?.release()
-        playThread = null
-        audioTrack = null
-    }
-
-    fun pause() {
-        isPlay = false
-    }
-
-    fun resume() {
-        isPlay = true
-    }
-
-    fun stop() {
+    private fun close() {
         isPlay = false
         playThread?.interrupt()
         playThread?.join()
