@@ -59,11 +59,7 @@ class ModulationModel
             sharedEnable.collect { value ->
                 Log.e(TAG, "Enable: $value")
                 savedStateHandle.set(SAVED_ENABLE_KEY, value)
-                if(value) {
-                    PlayService.play()
-                } else {
-                    PlayService.stop()
-                }
+                PlayService.enable = value
             }
         }
 
@@ -71,8 +67,6 @@ class ModulationModel
             sharedFrequency.collect { value ->
                 PlayService.frequency = value
                 savedStateHandle.set(SAVED_FREQUENCY_KEY, frequency.value)
-                val freq = savedStateHandle.get(SAVED_FREQUENCY_KEY) ?: DEFAULT_FREQUENCY
-                Log.e(TAG, "Frequency: $freq")
             }
         }
     }
