@@ -61,21 +61,13 @@ class PulseFragment : Fragment() {
             }
         }
 
-        pulseModel.enable.observe(viewLifecycleOwner, { enable ->
-            if(enable) {
-                pulsePlayer.play()
-            } else {
-                pulsePlayer.stop()
-            }
-        })
-
-        pulseModel.frequency.observe(viewLifecycleOwner, { frequency ->
+        pulseModel.frequency.observe(viewLifecycleOwner) { frequency ->
             pulsePlayer.frequency = frequency
-        })
+        }
 
-        pulseModel.envelope.observe(viewLifecycleOwner, { envelope ->
+        pulseModel.envelope.observe(viewLifecycleOwner) { envelope ->
             pulsePlayer.envelope = envelope
-        })
+        }
     }
 
     override fun onDestroyView() {
@@ -107,6 +99,5 @@ class PulseFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         Log.e(TAG, "onPause()")
-        pulsePlayer.stop()
     }
 }
