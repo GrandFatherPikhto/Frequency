@@ -67,17 +67,23 @@ class ToneModulationPlayer {
     private var isPlay = true
     private var playThread:Thread? = null
     private var audioTrack:AudioTrack? = null
+    private val enveloped = true
 
     private fun calcEnvelope(count: Int, step: Int): Double {
         return sin( PI * (count + step * sampleRate) * frequency / sampleRate)
     }
 
     private fun generateTone(step: Int = 0) {
-        var j = 0
+        // var j = 0
+        // Log.e(TAG, "generateTone()")
         for(i in 0 until sampleRate) {
-            val envelope = calcEnvelope(i, step)
-            modulations.find { pair -> pair.first == frequency }?.let { pair ->
-                sample[i] = sin(2 * PI * (i + step * sampleRate) * pair.second / sampleRate ) * envelope
+            if(enveloped) {
+                val envelope = calcEnvelope(i, step)
+                modulations.find { pair -> pair.first == frequency }?.let { pair ->
+                    sample[i] = sin(2 * PI * (i + step * sampleRate) * pair.second / sampleRate ) * envelope
+                }
+            } else {
+                sample[i] = sin(8 * PI * i * frequency / sampleRate)
             }
 
 //            if(envelope >= 0) {
@@ -101,6 +107,7 @@ class ToneModulationPlayer {
 
     fun play() {
         isPlay = true
+        // Log.e(TAG, "play($isPlay, $playThread)")
         if(playThread == null) {
             playThread = Thread {
                 var step = 0
@@ -108,6 +115,7 @@ class ToneModulationPlayer {
                     audioTrack = AudioTrack.Builder()
                         .setAudioAttributes(
                             AudioAttributes.Builder()
+                                    // USAGE_ALARM
                                 .setUsage(AudioAttributes.USAGE_ALARM)
                                 .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                                 .build()
@@ -121,13 +129,15 @@ class ToneModulationPlayer {
                         )
                         .setBufferSizeInBytes(generatedSound.size)
                         .build()
+                    audioTrack?.setVolume(10.0f)
                     while (isPlay) {
+                        // Log.e(TAG, "generateSound $step $audioTrack")
                         generateTone(step++)
                         audioTrack?.write(generatedSound, 0, generatedSound.size)
                         audioTrack?.play()
                     }
 
-                    close()
+                    stop()
                 } catch (e: Exception) {
                     Log.e(ModulationFragment.TAG, "Error: $e")
                 }
@@ -136,7 +146,7 @@ class ToneModulationPlayer {
         }
     }
 
-    private fun close() {
+    fun close() {
         playThread?.interrupt()
         playThread?.join()
         audioTrack?.stop()
@@ -145,7 +155,21 @@ class ToneModulationPlayer {
         audioTrack = null
     }
 
+    fun pause() {
+        isPlay = false
+    }
+
+    fun resume() {
+        isPlay = true
+    }
+
     fun stop() {
         isPlay = false
+        playThread?.interrupt()
+        playThread?.join()
+        audioTrack?.stop()
+        audioTrack?.release()
+        playThread = null
+        audioTrack = null
     }
 }
