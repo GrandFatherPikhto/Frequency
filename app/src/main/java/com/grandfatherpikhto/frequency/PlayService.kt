@@ -26,29 +26,12 @@ class PlayService: Service() {
                 modulationPlayer.frequency = value
             }
 
-        fun play() {
-            Log.e(TAG, "play()")
-            modulationPlayer.play()
-        }
-
-        fun stop() {
-            Log.e(TAG, "stop()")
-            modulationPlayer.stop()
-        }
-
-        fun pause() {
-            Log.e(TAG, "pause()")
-            modulationPlayer.stop()
-        }
-
-        fun resume() {
-            Log.e(TAG, "resume()")
-            modulationPlayer.play()
-        }
-
-        fun changeFrequency() {
-            Log.e(TAG, "changeFrequency()")
-        }
+        var enable:Boolean = false
+            get() = modulationPlayer.enable
+            set(value: Boolean) {
+                field = value
+                modulationPlayer.enable = value
+            }
     }
 
 
