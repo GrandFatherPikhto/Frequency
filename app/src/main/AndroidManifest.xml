@@ -23,6 +23,12 @@
             </intent-filter>
         </activity>
         <service android:name=".PlayService"  />
+        <receiver android:name=".BcReceiver"  android:exported="true">
+            <intent-filter>
+                <action android:name="com.rqd.Frequency.ACTION_STOP"/>
+
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
