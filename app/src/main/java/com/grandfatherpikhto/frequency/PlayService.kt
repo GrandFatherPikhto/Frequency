@@ -91,6 +91,7 @@ class PlayService: Service() {
     }
 
     override fun onDestroy() {
+        modulationPlayer.enable = false
         stopForeground(false)
         stopSelf()
         super.onDestroy()
