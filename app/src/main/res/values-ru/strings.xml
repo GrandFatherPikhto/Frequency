@@ -21,4 +21,6 @@
     <string name="action_pulse">Пульсация</string>
     <string name="action_play">Воспроизвести/Остановить</string>
     <string name="description_play">Воспроизвести/Остановить воспроизведение звука</string>
+    <string name="service_frequency">Генератор частоты</string>
+    <string name="stop_button">Стоп</string>
 </resources>

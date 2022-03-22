@@ -22,4 +22,6 @@
     <string name="action_pulse">Pulse</string>
     <string name="action_play">Play/Stop sound</string>
     <string name="description_play">Play/Stop sound</string>
+    <string name="service_frequency">Frequency generator</string>
+    <string name="stop_button">Stop</string>
 </resources>
