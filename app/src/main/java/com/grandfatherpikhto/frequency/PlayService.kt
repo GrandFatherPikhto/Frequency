@@ -90,6 +90,9 @@ class PlayService: Service() {
         startForeground(ONGOING_NOTIFICATION_ID, notification)
     }
 
+    /**
+     * TODO: Почему, после завершения сервиса продолжается воспроизведение?! Разберись!
+     */
     override fun onDestroy() {
         modulationPlayer.enable = false
         stopForeground(false)
