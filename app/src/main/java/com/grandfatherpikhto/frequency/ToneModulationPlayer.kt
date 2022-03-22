@@ -65,17 +65,23 @@ class ToneModulationPlayer {
         )
     }
 
+    /**
+     * Можно также использовать шаблон observeable
+     */
     var frequency:Int = 10
         get() = field
         set(value: Int) {
-            field = value
-            Log.e(TAG, "frequency = $field")
-            generateTone()
+            Log.e(TAG, "Frequency: field = $field, value = $value")
+            if(field != value) {
+                field = value
+                generateTone()
+            }
         }
 
     var enable:Boolean = false
         get() = field
         set(value: Boolean) {
+            Log.e(TAG, "Enable: field = $field, value = $value")
             if(field != value) {
                 field = value
                 if (value) {
@@ -128,6 +134,9 @@ class ToneModulationPlayer {
         }
     }
 
+    init {
+        Log.e(TAG, "Init")
+    }
 
     private fun play() {
         // Log.e(TAG, "play($isPlay, $playThread)")
