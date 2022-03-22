@@ -1,9 +1,11 @@
 package com.grandfatherpikhto.frequency
 
 import android.content.Intent
+import android.content.IntentFilter
 import android.media.AudioAttributes
 import android.media.AudioFormat
 import android.media.AudioTrack
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
 import com.google.android.material.snackbar.Snackbar
@@ -28,11 +30,14 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         const val TAG:String = "MainActivity"
+        private var instance:MainActivity ?= null
+        fun getInstance():MainActivity? = instance
         // val generatedSnd:Array<Double> = Array<Double>(size = numSamples, init = { _ -> 0.0 })
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.e(TAG, "onCreate()")
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -46,8 +51,10 @@ class MainActivity : AppCompatActivity() {
         Intent(this, PlayService::class.java).also { intent ->
             Log.e(TAG, "start Service model: $modulationModel")
             intentService = intent
-            startForegroundService(intent)
+            applicationContext.startForegroundService(intent)
         }
+
+        instance = this
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
