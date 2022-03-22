@@ -10,8 +10,6 @@ import android.os.Binder
 import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import androidx.lifecycle.LifecycleService
-import kotlin.math.roundToInt
 import kotlin.properties.Delegates
 
 class PlayService: Service() {
@@ -20,19 +18,21 @@ class PlayService: Service() {
         const val ONGOING_NOTIFICATION_ID = 1
         const val EXTRA_NOTIFICATION_ID = "stopService"
         const val ACTION_STOP = "com.rqd.Frequency.ACTION_STOP"
+        const val CHANNEL_ID = "my_channel_01"
+
 
         private val modulationPlayer by lazy {
             ToneModulationPlayer()
         }
 
-        var frequency by Delegates.observable(20) { property, oldValue, newValue ->
+        var frequency by Delegates.observable(20) { _, oldValue, newValue ->
             Log.e(TAG, "Frequency: old = $oldValue, new = $newValue")
             if(oldValue != newValue) {
                 modulationPlayer.frequency = newValue
             }
         }
 
-        var enable by Delegates.observable(false) { property, oldValue, newValue ->
+        var enable by Delegates.observable(false) { _, oldValue, newValue ->
             Log.e(TAG, "Enable: old = $oldValue, new = $newValue")
             if(oldValue != newValue) {
                 modulationPlayer.enable = newValue
@@ -49,7 +49,7 @@ class PlayService: Service() {
      */
     inner class LocalBinder : Binder() {
         // Return this instance of LocalService so clients can call public methods
-        fun getService(): PlayService = this@PlayService
+        // fun getService(): PlayService = this@PlayService
     }
 
     override fun onBind(intent: Intent): IBinder {
@@ -61,7 +61,6 @@ class PlayService: Service() {
     override fun onCreate() {
         super.onCreate()
         Log.e(TAG, "onCreate()")
-        val CHANNEL_ID = "my_channel_01"
         val channel = NotificationChannel(
             CHANNEL_ID,
             "Channel human readable title",
@@ -77,7 +76,8 @@ class PlayService: Service() {
             putExtra(EXTRA_NOTIFICATION_ID, 0)
         }
         val stopPendingIntent: PendingIntent =
-            PendingIntent.getBroadcast(this, 0, stopIntent, 0)
+            PendingIntent.getBroadcast(this, 0, stopIntent,
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT )
 
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle("Генератор частоты")
