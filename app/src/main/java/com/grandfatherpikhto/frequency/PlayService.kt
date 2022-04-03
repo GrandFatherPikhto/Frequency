@@ -100,4 +100,11 @@ class PlayService: Service() {
         super.onDestroy()
         Log.e(TAG, "onDestroy()")
     }
+
+    override fun onTaskRemoved(rootIntent: Intent?) {
+        super.onTaskRemoved(rootIntent)
+        Intent(baseContext, PlayService::class.java).let { intent ->
+            stopService(intent)
+        }
+    }
 }
